@@ -95,13 +95,13 @@ http://localhost:5000/call/ (gunicorn)
 You can use the API by internet with these URL
 
 ###### API Documentation
-https://call_records-lenz.herokuapp.com/docs
+https://call-records-lenz.herokuapp.com/docs
 
-###### Hello World page
-https://call_records-lenz.herokuapp.com
+###### Welcome page
+https://call-records-lenz.herokuapp.com
 
-###### Lista Agendamentos
-https://call_records-lenz.herokuapp.com/call/
+###### Calls list
+https://call-records-lenz.herokuapp.com/call/
 
 
 ### Coding style tests
@@ -135,10 +135,13 @@ $ heroku apps:create call-records-lenz
     https://call-records-lenz.herokuapp.com/ | https://git.heroku.com/call-records-lenz.git
 $ git push heroku master
     -----> Python app detected
-    -----> Launching... done, v7
+    -----> Launching...
+           Released v6
+           https://call-records-lenz.herokuapp.com/ deployed to Heroku
+    Verifying deploy... done.
 $ heroku run python call_records/manage.py migrate
 $ heroku config:set DEBUG=False
-$ heroku config:set SECRET_KEY=')z*j%sx=d3zq9h_m-ovw-hq!p2()yzg!ydft_+smpw=#n(l0h*'
+$ heroku config:set SECRET_KEY='@z_0$oog0f$*mtm7=mbh_8gff-&n4zt+l@89x%+&xhk)_wz$14'
 ```
 
 ## Built With
@@ -164,3 +167,4 @@ MIT License
 * Rest Django Framework Docs
 * Django Docs
 * You, who have read this document to the end
+

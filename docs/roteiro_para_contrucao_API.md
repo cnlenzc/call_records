@@ -399,9 +399,9 @@ $ heroku run python call_records/manage.py migrate
 
 #### Chamando a API pela linha de comando
 ```
-curl https://call_records-lenz.herokuapp.com/agendamento/
-curl -i https://call_records-lenz.herokuapp.com/agendamento/
-http get https://call_records-lenz.herokuapp.com/agendamento/
+curl https://call_records-lenz.herokuapp.com/call/
+curl -i https://call_records-lenz.herokuapp.com/call/
+http get https://call_records-lenz.herokuapp.com/call/
 http get https://call_records-lenz.herokuapp.com/call/1/
 ```
 
