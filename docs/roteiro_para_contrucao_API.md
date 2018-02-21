@@ -143,9 +143,10 @@ class Agendamento(models.Model):
 ##### Banco no Postgres criado pelo pgAdmin
 
 ```
-database name: db_age
-user: u_age
+database name: db_call_records
+user: u_call_records
 password: pwd123
+privileges: can login=yes; create database=yes
 ```
 ##### Criação dos objetos SQL (tabelas, etc)
 ```
@@ -318,16 +319,20 @@ REST_FRAMEWORK = {
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = os.environ.get('DEBUG') == 'True'
+print('DEBUG=%s' % DEBUG)
 
 ...
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
 DATABASES = {'default': {}}
+
 # Database with DATABASE_URL
 # Change 'default' database configuration with $DATABASE_URL.
 # https://pypi.org/project/dj-database-url/heroku config
+
 DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
 ```
