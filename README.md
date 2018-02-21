@@ -126,19 +126,19 @@ $ pylint --load-plugins pylint_django call_records/app
 
 How to deploy this on a live system
 ```
-    $ git add .
-    $ git commit -m "Added a file"
-    $ heroku login
-        Enter your Heroku credentials…
-    $ heroku create
-        Creating app... done, ⬢ nameless-fortress-70834
-        https://nameless-fortress-70834.herokuapp.com/ | https://git.heroku.com/nameless-fortress-70834.git
-    $ git push heroku master
-        -----> Python app detected
-        -----> Launching... done, v7
-    $ heroku run python call_records/manage.py migrate
-    $ heroku config:set DEBUG=False
-    $ heroku config:set SECRET_KEY=')z*j%sx=d3zq9h_m-ovw-hq!p2()yzg!ydft_+smpw=#n(l0h*'
+$ git add .
+$ git commit -m "Added a file"
+$ heroku login
+    Enter your Heroku credentials…
+$ heroku apps:create call-records-lenz
+    Creating ⬢ call-records-lenz... done
+    https://call-records-lenz.herokuapp.com/ | https://git.heroku.com/call-records-lenz.git
+$ git push heroku master
+    -----> Python app detected
+    -----> Launching... done, v7
+$ heroku run python call_records/manage.py migrate
+$ heroku config:set DEBUG=False
+$ heroku config:set SECRET_KEY=')z*j%sx=d3zq9h_m-ovw-hq!p2()yzg!ydft_+smpw=#n(l0h*'
 ```
 
 ## Built With
