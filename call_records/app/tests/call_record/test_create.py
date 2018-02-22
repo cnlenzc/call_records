@@ -1,30 +1,40 @@
-from rest_framework.test import APITestCase
-from rest_framework import status
-from .data import \
-    rec1, rec2
+from app.tests.my_assert import APITestCase_myAssert
+from .data import Records
 
-API_END_POINT = '/call-record/'
 
-class CreateAPI(APITestCase):
+class CreateAPI(APITestCase_myAssert):
+
+    API_END_POINT = '/call-record/'
 
     def test_create_ok(self):
-        response1 = self.client.post(API_END_POINT, data=rec1['in'])
-        self.myAssertCreate(response1, rec1)
+        self.call_post_and_assert(Records.ok1)
+        self.call_post_and_assert(Records.ok2)
 
-        response2 = self.client.post(API_END_POINT, data=rec2['in'])
-        self.myAssertCreate(response2, rec2)
+    def test_create_not_unique(self):
+        self.call_post_and_assert(Records.ok1)
+        self.call_post_and_assert(Records.not_unique)
 
-    def myAssertCreate(self, response, rec):
-        try:
-            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-            rec_out = rec['out']
-            for item in rec_out:
-                str_res = '%s:%s' % (item, response.data[item])
-                str_out = '%s:%s' % (item, rec_out[item])
-                self.assertEqual(str_res, str_out)
-        except AssertionError as err:
-            print('** ERROR in the return of create operation')
-            print('** input: %s' % rec['in'])
-            print('** status_code: %s' % response.status_code)
-            print('** output: %s' % response.data)
-            raise err
+    def test_create_blank(self):
+        self.call_post_and_assert(Records.all_blank)
+
+    def test_create_null(self):
+        self.call_post_and_assert(Records.all_null)
+
+    def test_start_without_source_destination(self):
+        self.call_post_and_assert(Records.start_without_source_destination)
+
+    def test_invalid_phone_number1(self):
+        self.call_post_and_assert(Records.invalid_phone_number1)
+
+    def test_invalid_phone_number2(self):
+        self.call_post_and_assert(Records.invalid_phone_number2)
+
+    def test_invalid_type(self):
+        self.call_post_and_assert(Records.invalid_type)
+
+    def test_invalid_timestamp_and_call_id1(self):
+        self.call_post_and_assert(Records.invalid_timestamp_and_call_id1)
+
+    def test_invalid_timestamp_and_call_id2(self):
+        self.call_post_and_assert(Records.invalid_timestamp_and_call_id2)
+

@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinLengthValidator
 
 START = '1'
 END = '2'
@@ -27,13 +27,13 @@ class CallRecord(models.Model):
         help_text = "The subscriber phone number that originated the call",
         max_length = 11,
         null = True,
-        validators = [phone_regex])
+        validators = [MinLengthValidator(10), phone_regex])
 
     destination = models.CharField(
         help_text = "The subscriber phone number that originated the call",
         max_length = 11,
         null = True,
-        validators = [phone_regex])
+        validators = [MinLengthValidator(10), phone_regex])
 
     class Meta:
         indexes = [

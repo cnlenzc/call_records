@@ -12,12 +12,15 @@ class CallRecordSerializer(serializers.ModelSerializer):
         """
         Check fields souce and destination.
         """
-        if attrs['type'] == START:
-            if not attrs['source']:
-                raise serializers.ValidationError(
-                    "The source field cannot be blank for call type start")
-            if not attrs['destination']:
-                raise serializers.ValidationError(
-                    "The destination field cannot be blank for call type start")
+        msgs = []
+        if attrs.get('type', None) == START:
+            if not attrs.get('source', None):
+                msgs.append("The source field cannot be blank for call type start")
+            if not attrs.get('destination', None):
+                msgs.append("The destination field cannot be blank for call type start")
+                # raise serializers.ValidationError(
+                #     "The destination field cannot be blank for call type start")
+        if len(msgs) > 0:
+            raise serializers.ValidationError(msgs)
 
         return attrs
