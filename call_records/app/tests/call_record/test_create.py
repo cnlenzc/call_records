@@ -1,40 +1,41 @@
 from app.tests.my_assert import APITestCase_myAssert
-from .data import Records
+from .data_create import Records_create as rec
+from . import API_END_POINT
 
 
-class CreateAPI(APITestCase_myAssert):
+class CallRecord_CreateAPI(APITestCase_myAssert):
 
-    API_END_POINT = '/call-record/'
+    api_end_point = API_END_POINT
 
     def test_create_ok(self):
-        self.call_post_and_assert(Records.ok1)
-        self.call_post_and_assert(Records.ok2)
+        self.create(rec.ok1, doAssert=True)
+        self.create(rec.ok2, doAssert=True)
 
     def test_create_not_unique(self):
-        self.call_post_and_assert(Records.ok1)
-        self.call_post_and_assert(Records.not_unique)
+        self.create(rec.ok1, doAssert=True)
+        self.create(rec.not_unique, doAssert=True)
 
     def test_create_blank(self):
-        self.call_post_and_assert(Records.all_blank)
+        self.create(rec.all_blank, doAssert=True)
 
     def test_create_null(self):
-        self.call_post_and_assert(Records.all_null)
+        self.create(rec.all_null, doAssert=True)
 
     def test_start_without_source_destination(self):
-        self.call_post_and_assert(Records.start_without_source_destination)
+        self.create(rec.start_without_source_destination, doAssert=True)
 
     def test_invalid_phone_number1(self):
-        self.call_post_and_assert(Records.invalid_phone_number1)
+        self.create(rec.invalid_phone_number1, doAssert=True)
 
     def test_invalid_phone_number2(self):
-        self.call_post_and_assert(Records.invalid_phone_number2)
+        self.create(rec.invalid_phone_number2, doAssert=True)
 
     def test_invalid_type(self):
-        self.call_post_and_assert(Records.invalid_type)
+        self.create(rec.invalid_type, doAssert=True)
 
-    def test_invalid_timestamp_and_call_id1(self):
-        self.call_post_and_assert(Records.invalid_timestamp_and_call_id1)
+    def test_invalid_timestamp_and_id1(self):
+        self.create(rec.invalid_timestamp_and_call_id1, doAssert=True)
 
-    def test_invalid_timestamp_and_call_id2(self):
-        self.call_post_and_assert(Records.invalid_timestamp_and_call_id2)
+    def test_invalid_timestamp_and_id2(self):
+        self.create(rec.invalid_timestamp_and_call_id2, doAssert=True)
 

@@ -4,7 +4,7 @@ from rest_framework import status
 timestamp1 = int(datetime.now().timestamp())
 timestamp2 = timestamp1 + 5 * 60  # 5 minutes after
 
-class Records(object):
+class Records_create():
 
     ok1 = \
     {
@@ -243,6 +243,40 @@ class Records(object):
             ]
         },
         "status_code": status.HTTP_400_BAD_REQUEST
+    }
+
+
+    list_ok = \
+    {
+        "create": [
+            ok1,
+            ok2
+        ],
+        "out":
+        {
+            "count": 2,
+            "next": None,
+            "previous": None,
+            "results": [
+                ok1['out'],
+                ok2['out']
+            ]
+        },
+        "status_code": status.HTTP_200_OK
+    }
+
+
+    list_empty = \
+    {
+        "create": [],
+        "out":
+        {
+            "count": 0,
+            "next": None,
+            "previous": None,
+            "results": []
+        },
+        "status_code": status.HTTP_200_OK
     }
 
 
