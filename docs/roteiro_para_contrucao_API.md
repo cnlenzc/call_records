@@ -182,7 +182,8 @@ select * from app_app;
 ```
 python manage.py dbshell
 \dt
-select * from app_agendamento;
+select * from app_standingcharge;
+TRUNCATE app_standingcharge RESTART IDENTITY;
 \q
 ```
 

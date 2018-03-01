@@ -99,11 +99,6 @@ DATABASES = {'default': {}}
 
 DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 25
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.'

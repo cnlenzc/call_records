@@ -6,6 +6,7 @@ from rest_framework.documentation import include_docs_urls
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'call-record', views.CallRecordViewSet)
+router.register(r'standing-charge', views.StandingChargeViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
