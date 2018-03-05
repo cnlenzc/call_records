@@ -3,7 +3,7 @@ from .data_list import Records_list as rec
 from . import API_END_POINT
 
 
-class CallRecord_ListAPI(APITestCase_myAssert):
+class ListAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

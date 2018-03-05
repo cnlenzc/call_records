@@ -3,7 +3,7 @@ from .data_update import Records_update as rec
 from . import API_END_POINT
 
 
-class CallRecord_UpdateAPI(APITestCase_myAssert):
+class UpdateAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

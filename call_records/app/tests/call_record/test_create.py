@@ -3,7 +3,7 @@ from .data_create import Records_create as rec
 from . import API_END_POINT
 
 
-class CallRecord_CreateAPI(APITestCase_myAssert):
+class CreateAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

@@ -3,7 +3,7 @@ from .data_destroy import Records_destroy as recd
 from . import API_END_POINT
 
 
-class CallRecord_DestroyAPI(APITestCase_myAssert):
+class DestroyAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

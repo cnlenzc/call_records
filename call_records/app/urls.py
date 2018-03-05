@@ -7,10 +7,11 @@ from rest_framework.documentation import include_docs_urls
 router = DefaultRouter()
 router.register(r'call-record', views.CallRecordViewSet)
 router.register(r'standing-charge', views.StandingChargeViewSet)
+router.register(r'call-charge', views.CallChargeViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.IndexViewSet.as_view({'get': 'list'})),
     url(r'^docs/', include_docs_urls(title='REST API for Call Records')),
     url(r'^', include(router.urls)),
 ]

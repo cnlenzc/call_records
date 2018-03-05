@@ -3,7 +3,7 @@ from .data_partial_update import Records_partial_update as rec
 from . import API_END_POINT
 
 
-class CallRecord_PartialUpdateAPI(APITestCase_myAssert):
+class PartialUpdateAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

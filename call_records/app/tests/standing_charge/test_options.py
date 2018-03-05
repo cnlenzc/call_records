@@ -3,7 +3,7 @@ from .data_options import Records_options as rec
 from . import API_END_POINT
 
 
-class CallRecord_optionsAPI(APITestCase_myAssert):
+class OptionsAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

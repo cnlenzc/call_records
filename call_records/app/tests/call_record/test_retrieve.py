@@ -3,7 +3,7 @@ from .data_retrieve import Records_retrieve as recd
 from . import API_END_POINT
 
 
-class CallRecord_DestroyAPI(APITestCase_myAssert):
+class RetrieveAPI(APITestCase_myAssert):
 
     api_end_point = API_END_POINT
 

@@ -11,17 +11,17 @@ class CallRecordFilter(FilterSet):
         fields = ['call_id', 'source']
 
 
-class CustomPagination(pagination.PageNumberPagination):
+class CallRecordPagination(pagination.PageNumberPagination):
 
     page_size = 25
 
-    # def get_paginated_response(self, data):
-    #     return response.Response({
-    #         'count': self.page.paginator.count,
-    #         'next': self.get_next_link(),
-    #         'previous': self.get_previous_link(),
-    #         'results': data
-    #     })
+    def get_paginated_response(self, data):
+        return response.Response({
+            'count': self.page.paginator.count,
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'results': data
+        })
 
 
 class CallRecordViewSet(viewsets.ModelViewSet):
@@ -39,5 +39,5 @@ class CallRecordViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     filter_backends = (DjangoFilterBackend,)
     filter_class = CallRecordFilter
-    pagination_class = CustomPagination
+    pagination_class = CallRecordPagination
 
