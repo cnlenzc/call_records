@@ -43,7 +43,7 @@ class CallRecord(models.Model):
         ordering = ('call_id', 'timestamp', 'type')
 
     def __str__(self):
-        return '%s %s source:%s timestamp:%s' % \
+        return 'type:%s call_id:%s source:%s timestamp:%s' % \
                (self.type, self.call_id, self.source, self.timestamp)
 
 
