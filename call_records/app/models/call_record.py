@@ -1,14 +1,10 @@
 from django.db import models
-from django.core.validators import RegexValidator, MinLengthValidator
+from util import MyTypes
+
 
 START = '1'
 END = '2'
 choices_type = ((START, 'start'), (END, 'end'))
-
-phone_regex = RegexValidator(
-    regex = r'^\d{10,11}$',
-    message = "Phone number must be entered in the format: 'AAXXXXXXXXX'. "
-              "Where AA is the area code and XXXXXXXXX is the phone number.")
 
 
 class CallRecord(models.Model):
@@ -23,17 +19,13 @@ class CallRecord(models.Model):
     call_id = models.PositiveIntegerField(
         help_text = "Unique for each call record pair")
 
-    source = models.CharField(
+    source = MyTypes.PhoneNumber11(
         help_text = "The subscriber phone number that originated the call",
-        max_length = 11,
-        null = True,
-        validators = [MinLengthValidator(10), phone_regex])
+        null = True)
 
-    destination = models.CharField(
-        help_text = "The subscriber phone number that originated the call",
-        max_length = 11,
-        null = True,
-        validators = [MinLengthValidator(10), phone_regex])
+    destination = MyTypes.PhoneNumber11(
+        help_text = "The phone number receiving the call",
+        null = True)
 
     class Meta:
         indexes = [
