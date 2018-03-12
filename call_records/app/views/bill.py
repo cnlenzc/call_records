@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django.db import transaction
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions, pagination, status, response, exceptions
+from rest_framework import viewsets, permissions, mixins, pagination, status, response, exceptions
 from app.models import Bill, BillLine, CallRecord, START, END
 from app.serializers import BillSerializer
 from app.business_rules import BuildTheBill
@@ -27,15 +28,13 @@ class BillPagination(pagination.PageNumberPagination):
         })
 
 
-class BillViewSet(viewsets.ModelViewSet):
+class BillViewSet(mixins.CreateModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
     """
     This viewset provides the following actions:
     list: Returns the bill list.
     create: Create a new bill.
-    retrieve: Returns a specific bill.
-    update: Update all fields in a bill.
-    partial_update: Update a field from a bill.
-    destroy: Remove a bill.
     """
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
@@ -55,10 +54,12 @@ class BillViewSet(viewsets.ModelViewSet):
             period = request.data.get('period', '')
             if period == '':
                 period = get_last_month()
+            # trying to get the instance with the same key
             instance = self.get_queryset().get(source=source, period=period)
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
         except Bill.DoesNotExist:
+            # if the instance does not exist, then create
             return super().create(request, *args, **kwargs)
 
 
@@ -67,11 +68,8 @@ class BillViewSet(viewsets.ModelViewSet):
         rewriting the perform_create method.
         creating all the lines of the bill.
         '''
-        super().perform_create(serializer)
-        try:
+        # This operation must be atomic (doing everything or nothing)
+        with transaction.atomic():
+            super().perform_create(serializer)
             BuildTheBill(serializer.instance).build()
-        except Exception as e:
-            serializer.instance.delete()
-            raise e
-
 
