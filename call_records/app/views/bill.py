@@ -1,7 +1,10 @@
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework import viewsets, permissions, pagination, response
-from app.models import Bill
+from rest_framework.response import Response
+from rest_framework import viewsets, permissions, pagination, status, response, exceptions
+from app.models import Bill, BillLine, CallRecord, START, END
 from app.serializers import BillSerializer
+from app.business_rules import BuildTheBill
+from util import get_last_month
 
 
 class BillFilter(FilterSet):
@@ -40,4 +43,35 @@ class BillViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_class = BillFilter
     pagination_class = BillPagination
+
+
+    def create(self, request, *args, **kwargs):
+        '''
+        rewriting the create method.
+        if the object exists, then do not create, just retrieve.
+        '''
+        try:
+            source = request.data.get('source', '')
+            period = request.data.get('period', '')
+            if period == '':
+                period = get_last_month()
+            instance = self.get_queryset().get(source=source, period=period)
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        except Bill.DoesNotExist:
+            return super().create(request, *args, **kwargs)
+
+
+    def perform_create(self, serializer):
+        '''
+        rewriting the perform_create method.
+        creating all the lines of the bill.
+        '''
+        super().perform_create(serializer)
+        try:
+            BuildTheBill(serializer.instance).build()
+        except Exception as e:
+            serializer.instance.delete()
+            raise e
+
 

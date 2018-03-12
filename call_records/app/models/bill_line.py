@@ -8,7 +8,7 @@ class BillLine(models.Model):
     bill = models.ForeignKey(
         Bill,
         help_text = "The bill informations",
-        related_name='bill_lines',
+        related_name='calls',
         on_delete=models.CASCADE)
 
     destination = MyTypes.PhoneNumber11(
