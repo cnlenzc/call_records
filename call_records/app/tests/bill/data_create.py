@@ -133,6 +133,53 @@ class Records_create():
         "status_code": status.HTTP_201_CREATED
     }
 
+    ok_near_60seg = \
+    {
+        "in":
+        {
+            "source": "11111111111",
+            "period": "2018-02",
+        },
+        "out":
+        {
+            "source": "11111111111",
+            "period": "2018-02",
+            "calls": [
+                {
+                    "destination": "21980000008",
+                    "start_date_time": "2018-02-20T09:00:20",
+                    "duration": "00:00:59",
+                    "price": "0.36"
+                },
+                {
+                    "destination": "21980000009",
+                    "start_date_time": "2018-02-21T09:00:20",
+                    "duration": "00:01:00",
+                    "price": "0.45"
+                },
+                {
+                    "destination": "21980000010",
+                    "start_date_time": "2018-02-22T09:00:20",
+                    "duration": "00:01:01",
+                    "price": "0.45"
+                },
+                {
+                    "destination": "21980000011",
+                    "start_date_time": "2018-02-23T09:00:40",
+                    "duration": "00:01:00",
+                    "price": "0.45"
+                },
+                {
+                    "destination": "21980000012",
+                    "start_date_time": "2018-02-24T09:00:00",
+                    "duration": "00:01:00",
+                    "price": "0.45"
+                }
+            ]
+        },
+        "status_code": status.HTTP_201_CREATED
+    }
+
     not_unique = \
     {
         "in": ok2["in"],

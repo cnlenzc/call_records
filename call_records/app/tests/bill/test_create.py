@@ -26,6 +26,9 @@ class CreateAPI(APITestCase_myAssert):
     def test_create_ok_5_calls(self):
         self.create(rec.ok_5_calls, doAssert=True)
 
+    def test_create_ok_near_60seg(self):
+        self.create(rec.ok_near_60seg, doAssert=True)
+
     def test_create_not_unique(self):
         self.create(rec.ok2, doAssert=True)
         self.create(rec.not_unique, doAssert=True)
