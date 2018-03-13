@@ -14,14 +14,16 @@ class CreateAPI(APITestCase_myAssert):
         call_command('create_data')
 
     def test_create_ok_no_calls(self):
-        self.create(rec.ok1, doAssert=True)
-        self.create(rec.ok2, doAssert=True)
+        self.create(rec.ok_no_calls, doAssert=True)
+
+    def test_create_ok_no_calls_and_default_period(self):
+        self.create(rec.ok_no_calls_and_default_period, doAssert=True)
 
     def test_create_ok_1_call(self):
         self.create(rec.ok_1_call, doAssert=True)
 
-    def test_create_ok_2_calls(self):
-        self.create(rec.ok_2_calls, doAssert=True)
+    def test_create_ok_end_of_call_out_of_period(self):
+        self.create(rec.ok_end_of_call_out_of_period, doAssert=True)
 
     def test_create_ok_5_calls(self):
         self.create(rec.ok_5_calls, doAssert=True)
@@ -30,7 +32,7 @@ class CreateAPI(APITestCase_myAssert):
         self.create(rec.ok_near_60seg, doAssert=True)
 
     def test_create_not_unique(self):
-        self.create(rec.ok2, doAssert=True)
+        self.create(rec.ok_no_calls, doAssert=True)
         self.create(rec.not_unique, doAssert=True)
 
     def test_create_blank(self):

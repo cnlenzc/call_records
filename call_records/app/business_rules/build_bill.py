@@ -11,6 +11,7 @@ class BuildTheBill():
     def build(self):
         self._standing_charge = self._read_standing_charge()
         self._call_charge = self._read_call_charge()
+        self._timestamp_calculation()
         calls_of_period = self._read_calls_of_period()
 
         for call_start in calls_of_period:
@@ -22,28 +23,33 @@ class BuildTheBill():
             raise ValidationError('The Standing Charge setting does not exist.')
         return list[0].price
 
-
     def _read_call_charge(self):
         list = CallCharge.objects.filter()[:1]
         if len(list) != 1:
             raise ValidationError('The Call Charge setting does not exist.')
         return list[0]
 
-    def _read_calls_of_period(self):
+    def _timestamp_calculation(self):
         year, month = self._bill.period.split('-')[:2]
+        # first day of the period
         period_start = datetime(int(year), int(month), 1, 0, 0)
+        # first day after the period
         period_end = datetime(
             period_start.year + (period_start.month // 12),
             ((period_start.month % 12) + 1),
             1, 0, 0)
-        timestamp_start = int(period_start.timestamp())
-        timestamp_end = int(period_end.timestamp())
+        # anticipating the start because a call may end in the given period
+        period_start_anticipating = period_start - timedelta(days=7)
+        self.timestamp_start = int(period_start.timestamp())
+        self.timestamp_start_anticipating = int(period_start_anticipating.timestamp())
+        self.timestamp_end = int(period_end.timestamp())
 
+    def _read_calls_of_period(self):
         calls = CallRecord.objects\
             .filter(
                 source = self._bill.source,
                 type = START,
-                timestamp__range = (timestamp_start, timestamp_end))\
+                timestamp__range = (self.timestamp_start_anticipating, self.timestamp_end))\
             .order_by('source', 'timestamp')\
             .values('timestamp', 'destination', 'call_id')
 
@@ -54,14 +60,20 @@ class BuildTheBill():
             .filter(call_id=call_start['call_id'], type=END) \
             .values('timestamp')
 
-        if len(call_end) == 0:
-            duration = timedelta(seconds=0)
-            price = self._price_calculation(call_start['timestamp'], call_start['timestamp'])
-        else:
-            call_end = call_end[0]
-            seconds = call_end['timestamp'] - call_start['timestamp']
-            duration = timedelta(seconds=seconds)
-            price = self._price_calculation(call_start['timestamp'], call_end['timestamp'])
+        if call_end.count() == 0:
+            # ignoring endless record
+            return
+
+        call_end = call_end[0]
+
+        if call_end['timestamp'] < self.timestamp_start or\
+            call_end['timestamp'] >= self.timestamp_end:
+            # ignoring the record when the end is out of period
+            return
+
+        seconds = call_end['timestamp'] - call_start['timestamp']
+        duration = timedelta(seconds=seconds)
+        price = self._price_calculation(call_start['timestamp'], call_end['timestamp'])
 
         BillLine.objects.create(
             bill=self._bill,
