@@ -16,5 +16,3 @@ class CreateAPI(APITestCase_myAssert):
 
     def test_invalid_price(self):
         self.create(rec.invalid_price, doAssert=True)
-
-

@@ -3,8 +3,7 @@ from rest_framework import status
 
 class Records_options():
 
-    ok = \
-    {
+    ok = {
         "out":
         {
             "name": "Call Charge List",

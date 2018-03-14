@@ -10,5 +10,3 @@ class PartialUpdateAPI(APITestCase_myAssert):
     def test_partial_update_ok(self):
         id = self.create(rec.ok1['create'], doAssert=False)
         self.partial_update(rec.ok1, id, doAssert=True)
-
-

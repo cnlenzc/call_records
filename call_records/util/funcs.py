@@ -1,5 +1,6 @@
 import datetime
 
+
 def get_last_month():
     year_today, month_today = datetime.date.today().timetuple()[:2]
     year_last = year_today

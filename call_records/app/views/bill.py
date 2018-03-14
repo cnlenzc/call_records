@@ -1,8 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from django.db import transaction
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions, mixins, pagination, status, response, exceptions
-from app.models import Bill, BillLine, CallRecord, START, END
+from rest_framework import viewsets, permissions, mixins, pagination, response
+from app.models import Bill
 from app.serializers import BillSerializer
 from app.business_rules import BuildTheBill
 from util import get_last_month
@@ -43,7 +43,6 @@ class BillViewSet(mixins.CreateModelMixin,
     filter_class = BillFilter
     pagination_class = BillPagination
 
-
     def create(self, request, *args, **kwargs):
         '''
         rewriting the create method.
@@ -62,7 +61,6 @@ class BillViewSet(mixins.CreateModelMixin,
             # if the instance does not exist, then create
             return super().create(request, *args, **kwargs)
 
-
     def perform_create(self, serializer):
         '''
         rewriting the perform_create method.
@@ -72,4 +70,3 @@ class BillViewSet(mixins.CreateModelMixin,
         with transaction.atomic():
             super().perform_create(serializer)
             BuildTheBill(serializer.instance).build()
-

@@ -1,10 +1,9 @@
-from datetime import datetime
 from rest_framework import status
+
 
 class Records_create():
 
-    ok1 = \
-    {
+    ok1 = {
         "in":
         {
             "price00h": "0",
@@ -62,8 +61,7 @@ class Records_create():
         "status_code": status.HTTP_201_CREATED
     }
 
-    ok2 = \
-    {
+    ok2 = {
         "in":
         {
             "price00h": "0.00",
@@ -121,8 +119,7 @@ class Records_create():
         "status_code": status.HTTP_201_CREATED
     }
 
-    all_null = \
-    {
+    all_null = {
         "in":
         {
             "price00h": None,
@@ -228,8 +225,7 @@ class Records_create():
         "status_code": status.HTTP_400_BAD_REQUEST
     }
 
-    invalid_price = \
-    {
+    invalid_price = {
         "in":
         {
             "price00h": "123456789012.12",
@@ -284,10 +280,12 @@ class Records_create():
                 "A valid number is required."
             ],
             "price12h": [
-                "Ensure that there are no more than 10 digits before the decimal point."
+                "Ensure that there are no more than 10 digits "
+                "before the decimal point."
             ],
             "price13h": [
-                "Ensure that there are no more than 10 digits before the decimal point."
+                "Ensure that there are no more than 10 digits "
+                "before the decimal point."
             ],
             "price14h": [
                 "Ensure that there are no more than 12 digits in total."
@@ -298,6 +296,3 @@ class Records_create():
         },
         "status_code": status.HTTP_400_BAD_REQUEST
     }
-
-
-

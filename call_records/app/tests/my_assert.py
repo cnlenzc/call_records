@@ -72,7 +72,7 @@ class APITestCase_myAssert(APITestCase):
                 json.dumps(my_rec.get('in', None), indent=4),
                 getattr(response, "status_code", None),
                 my_rec.get('status_code', None),
-                json.dumps(getattr(response, "data", None), indent = 4),
+                json.dumps(getattr(response, "data", None), indent=4),
                 json.dumps(my_rec.get("out", None), indent=4)
             )
 
@@ -81,22 +81,25 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertBaseType(self, response, expected, path):
         if response != expected:
             self.fail(
-                "Field value does not match. path:'%s' response:'%s' expected:'%s' %s"
+                "Field value does not match. "
+                "path:'%s' response:'%s' expected:'%s' %s"
                 % (path, response, expected, self.dump_msg))
 
     def __myAssertDict(self, response, expected, path):
         for key_dict in expected:
             new_path = '%s.%s' % (path, key_dict)
             if key_dict in response:
-                self.__myAssertEqual(response[key_dict], expected[key_dict], new_path)
+                self.__myAssertEqual(
+                    response[key_dict], expected[key_dict], new_path)
             else:
                 self.fail("Field not found. field:'%s' path:'%s' %s"
-                    % (key_dict, path, self.dump_msg))
+                          % (key_dict, path, self.dump_msg))
 
     def __myAssertList(self, response, expected, path):
         if len(response) != len(expected):
             self.fail(
-                "List length does not match. path:'%s' response:'%s' expected:'%s' %s"
+                "List length does not match. "
+                "path:'%s' response:'%s' expected:'%s' %s"
                 % (path, len(response), len(expected), self.dump_msg))
         for i, item_expected in enumerate(expected):
             new_path = '%s[%s]' % (path, i)
@@ -105,9 +108,9 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertEqual(self, response, expected, path):
         # if isinstance(response, expected.__class__.__name__):
         if type(response) != type(expected) and \
-                not (isinstance(expected, dict) and isinstance(response, dict)) and \
-                not (isinstance(expected, list) and isinstance(response, list)) and \
-                not (isinstance(expected, str) and isinstance(response, str)):
+           not (isinstance(expected, dict) and isinstance(response, dict)) and\
+           not (isinstance(expected, list) and isinstance(response, list)) and\
+           not (isinstance(expected, str) and isinstance(response, str)):
             self.fail(
                 "Type mismatch. path:'%s' response:'%s' expected:'%s' %s"
                 % (path, type(response), type(expected), self.dump_msg))
@@ -122,20 +125,23 @@ class APITestCase_myAssert(APITestCase):
             self.__myAssertBaseType(response, expected, path)
 
         else:
-            self.fail("This type is not allowed.  path:'%s' response:'%s' expected:'%s' %s"
-                % (path, type(response), type(expected), self.dump_msg))
+            self.fail("This type is not allowed. "
+                      "path:'%s' response:'%s' expected:'%s' %s"
+                      % (path, type(response), type(expected), self.dump_msg))
 
     def myAssertJson(self, response, expected, path='json'):
         if 'status_code' in expected:
             if response.status_code != expected['status_code']:
                 self.fail(
-                    "STATUS_CODE does not match. path:'%s' response:'%s' expected:'%s' %s"
-                    % (path, response.status_code, expected['status_code'], self.dump_msg))
+                    "STATUS_CODE does not match. "
+                    "path:'%s' response:'%s' expected:'%s' %s"
+                    % (path, response.status_code,
+                       expected['status_code'], self.dump_msg))
         else:
             self.fail("The 'status_code' field is not on the expected record")
 
         if 'out' in expected:
-            self.__myAssertEqual(getattr(response, "data", None), expected['out'], path)
+            self.__myAssertEqual(getattr(response, "data", None),
+                                 expected['out'], path)
         else:
             self.fail("The 'out' field is not on the expected record")
-

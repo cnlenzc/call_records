@@ -5,10 +5,10 @@ from util import MyTypes, get_last_month
 class Bill(models.Model):
 
     source = MyTypes.PhoneNumber11(
-        help_text = "The subscriber phone number that originated the call")
+        help_text="The subscriber phone number that originated the call")
 
     period = MyTypes.PeriodYearMonth(
-        help_text = "The reference period (month/year) (optional)",
+        help_text="The reference period (month/year) (optional)",
         default=get_last_month)
 
     class Meta:
@@ -19,6 +19,3 @@ class Bill(models.Model):
     def __str__(self):
         return 'source:%s period:%s' % \
                (self.source, self.period)
-
-
-

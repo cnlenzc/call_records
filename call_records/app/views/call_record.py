@@ -40,4 +40,3 @@ class CallRecordViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_class = CallRecordFilter
     pagination_class = CallRecordPagination
-

@@ -38,4 +38,3 @@ class CreateAPI(APITestCase_myAssert):
 
     def test_invalid_timestamp_and_id2(self):
         self.create(rec.invalid_timestamp_and_call_id2, doAssert=True)
-
