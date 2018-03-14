@@ -1,0 +1,28 @@
+{
+  "name": "call_records",
+  "description": "REST API for Call Records ",
+  "scripts": {
+    "postdeploy": "python ./call_records/manage.py create_data"
+  },
+  "env": {
+    "DEBUG": {
+      "required": true
+    },
+    "SECRET_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
