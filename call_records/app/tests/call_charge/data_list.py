@@ -4,8 +4,7 @@ from .data_create import Records_create as recc
 
 class Records_list():
 
-    list_ok = \
-    {
+    list_ok = {
         "create": [
             recc.ok1,
             recc.ok2
@@ -14,11 +13,8 @@ class Records_list():
         "status_code": status.HTTP_200_OK
     }
 
-    list_empty = \
-    {
+    list_empty = {
         "create": [],
         "out": {},
         "status_code": status.HTTP_200_OK
     }
-
-

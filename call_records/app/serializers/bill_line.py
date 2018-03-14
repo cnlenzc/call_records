@@ -14,4 +14,3 @@ class BillLineSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillLine
         fields = ('__all__')
-

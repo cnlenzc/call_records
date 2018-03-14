@@ -40,4 +40,3 @@ class BillLineViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_class = BillLineFilter
     pagination_class = BillLinePagination
-

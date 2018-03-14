@@ -9,4 +9,3 @@ class OptionsAPI(APITestCase_myAssert):
 
     def test_options_ok(self):
         self.options(rec.ok, doAssert=True)
-

@@ -55,4 +55,3 @@ class CreateAPI(APITestCase_myAssert):
 
     def test_invalid_period_future(self):
         self.create(rec.invalid_period_future, doAssert=True)
-

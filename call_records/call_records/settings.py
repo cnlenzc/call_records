@@ -16,11 +16,16 @@ import dj_database_url
 if os.environ.get('DEBUG') is None:
     print('Loading .env File')
     import dotenv
-    DOTENV_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
+    DOTENV_FILE = \
+        os.path.join(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.dirname(__file__))), '.env')
     if os.path.isfile(DOTENV_FILE):
         dotenv.load_dotenv(DOTENV_FILE)
     else:
-        raise OSError('File .env does not exists. Rename the file .env_dev to .env')
+        raise OSError('File .env does not exists. '
+                      'Rename the file .env_dev to .env')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

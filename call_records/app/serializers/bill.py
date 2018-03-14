@@ -10,4 +10,3 @@ class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
         fields = ('id', 'source', 'period', 'calls')
-

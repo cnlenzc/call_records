@@ -17,5 +17,3 @@ class Command(BaseCommand):
     def delete_all(self, model):
         affected_rows = model.objects.all().delete()
         print('delete %s %s' % (model.__name__, affected_rows))
-
-

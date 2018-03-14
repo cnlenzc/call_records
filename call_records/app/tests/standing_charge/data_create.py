@@ -1,10 +1,9 @@
-from datetime import datetime
 from rest_framework import status
+
 
 class Records_create():
 
-    ok1 = \
-    {
+    ok1 = {
         "in":
         {
             "price": "0.36"
@@ -16,8 +15,7 @@ class Records_create():
         "status_code": status.HTTP_201_CREATED
     }
 
-    ok2 = \
-    {
+    ok2 = {
         "in":
         {
             "price": "1234567890.12"
@@ -29,8 +27,7 @@ class Records_create():
         "status_code": status.HTTP_201_CREATED
     }
 
-    all_null = \
-    {
+    all_null = {
         "in":
         {
             "price": None
@@ -44,8 +41,7 @@ class Records_create():
         "status_code": status.HTTP_400_BAD_REQUEST
     }
 
-    invalid_price = \
-    {
+    invalid_price = {
         "in":
         {
             "price": "1234567890123.12"
@@ -59,8 +55,7 @@ class Records_create():
         "status_code": status.HTTP_400_BAD_REQUEST
     }
 
-    invalid_price2 = \
-    {
+    invalid_price2 = {
         "in":
         {
             "price": "-4.00",
@@ -73,8 +68,3 @@ class Records_create():
         },
         "status_code": status.HTTP_400_BAD_REQUEST
     }
-
-
-
-
-

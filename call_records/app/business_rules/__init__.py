@@ -1,1 +1,1 @@
-from .build_bill import BuildTheBill
+from .build_bill import BuildTheBill  # noqa: F401

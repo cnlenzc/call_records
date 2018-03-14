@@ -1,7 +1,8 @@
 from functools import partial
 import datetime
 from django.db import models
-from django.core.validators import MinValueValidator, MinLengthValidator, RegexValidator
+from django.core.validators import \
+    MinValueValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from .funcs import get_last_month
 
@@ -15,7 +16,8 @@ PhoneNumber11_regex = RegexValidator(
 def PeriodYearMonth_validate(value):
     regex = RegexValidator(
         regex=r'^\d{4}-\d{2}$',
-        message="Invalid period. Period must be entered in the format: 'YYYY-MM'. "
+        message="Invalid period. Period must be entered in the format: "
+                "'YYYY-MM'. "
                 "Where YYYY is the year and MM is the month.")
     regex(value)
 
@@ -23,10 +25,12 @@ def PeriodYearMonth_validate(value):
         year, month = value.split('-')[:2]
         datetime.date(int(year), int(month), 1)
     except ValueError:
-        raise ValidationError("Invalid period. The period must be a valid year-month.")
+        raise ValidationError("Invalid period. "
+                              "The period must be a valid year-month.")
 
     if value > get_last_month():
-        raise ValidationError("Invalid period: year-month must be in the past.")
+        raise ValidationError("Invalid period: "
+                              "year-month must be in the past.")
 
 
 class MyTypes:
@@ -45,4 +49,3 @@ class MyTypes:
         max_digits=12,
         decimal_places=2,
         validators=[MinValueValidator(0.0)])
-

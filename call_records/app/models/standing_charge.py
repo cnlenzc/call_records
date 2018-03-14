@@ -4,7 +4,7 @@ from util import MyTypes
 
 class StandingCharge(models.Model):
     price = MyTypes.PositiveMoneyField12(
-        help_text = "Standing charge price per call")
+        help_text="Standing charge price per call")
 
     class Meta:
         ordering = ('id',)
