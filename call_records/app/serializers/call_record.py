@@ -1,8 +1,14 @@
+"""
+Call Record serializer definition
+"""
 from rest_framework import serializers
 from app.models import CallRecord, START
 
 
 class CallRecordSerializer(serializers.ModelSerializer):
+    """
+    Call Record serializer definition
+    """
 
     class Meta:
         model = CallRecord
@@ -20,7 +26,7 @@ class CallRecordSerializer(serializers.ModelSerializer):
             if not attrs.get('destination', None):
                 msgs.append("The destination field cannot be "
                             "blank for call type start")
-        if len(msgs) > 0:
+        if msgs:
             raise serializers.ValidationError(msgs)
 
         return attrs

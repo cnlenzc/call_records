@@ -1,3 +1,6 @@
+"""
+data to test create
+"""
 from datetime import datetime
 from rest_framework import status
 
@@ -6,6 +9,9 @@ timestamp2 = timestamp1 + 5 * 60  # 5 minutes after
 
 
 class Records_create():
+    """
+    class to define the records to test and assert
+    """
 
     ok1 = \
         {

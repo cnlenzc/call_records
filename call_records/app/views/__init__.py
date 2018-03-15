@@ -1,3 +1,6 @@
+"""
+View definition
+"""
 from .index import IndexViewSet  # noqa: F401
 from .call_record import CallRecordViewSet  # noqa: F401
 from .standing_charge import StandingChargeViewSet  # noqa: F401

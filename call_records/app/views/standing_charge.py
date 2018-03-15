@@ -1,3 +1,6 @@
+"""
+Standing Charge view definition
+"""
 from rest_framework import viewsets, mixins, permissions, response
 from app.models import StandingCharge
 from app.serializers import StandingChargeSerializer
@@ -9,7 +12,7 @@ class StandingChargeViewSet(mixins.CreateModelMixin,
     """
     This viewset provides the following actions:
     list: Returns the StandingCharge.
-    create: Create (or update) a new StandingCharge.
+    create: Create (or update) the StandingCharge.
     """
     queryset = StandingCharge.objects.all()
     serializer_class = StandingChargeSerializer

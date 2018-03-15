@@ -1,8 +1,14 @@
+"""
+Bill model definition
+"""
 from django.db import models
 from util import MyTypes, get_last_month
 
 
 class Bill(models.Model):
+    """
+    Bill model definition
+    """
 
     source = MyTypes.PhoneNumber11(
         help_text="The subscriber phone number that originated the call")

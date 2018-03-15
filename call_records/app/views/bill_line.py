@@ -1,3 +1,6 @@
+"""
+Bill line view definition
+"""
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import viewsets, permissions, pagination, response
 from app.models import BillLine
@@ -5,6 +8,9 @@ from app.serializers import BillLineSerializer
 
 
 class BillLineFilter(FilterSet):
+    """
+    Bill line Filter definition
+    """
 
     class Meta:
         model = BillLine
@@ -12,6 +18,9 @@ class BillLineFilter(FilterSet):
 
 
 class BillLinePagination(pagination.PageNumberPagination):
+    """
+    Bill line Pagination definition
+    """
 
     page_size = 25
 

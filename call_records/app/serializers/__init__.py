@@ -1,3 +1,6 @@
+"""
+Serializers definition
+"""
 from .call_record import CallRecordSerializer  # noqa: F401
 from .standing_charge import StandingChargeSerializer  # noqa: F401
 from .call_charge import CallChargeSerializer  # noqa: F401

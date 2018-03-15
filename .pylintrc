@@ -10,6 +10,10 @@
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 disable=
+    attribute-defined-outside-init,
+    no-self-use,
+    unused-argument,
+    duplicate-code,
     no-member,
     too-few-public-methods,
     invalid-name,

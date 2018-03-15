@@ -1,12 +1,24 @@
+"""
+Improve Assert for Json API
+"""
 import json
 from rest_framework.test import APITestCase
 
 
 class APITestCase_myAssert(APITestCase):
+    """
+    Class to improve APITest to simplify automatic testing
+    """
 
     api_end_point = None
 
     def create(self, my_rec, doAssert):
+        """
+        Call and assert create
+        :param my_rec:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'create post'
         self.end_point = self.api_end_point
         response = self.client.post(self.end_point, data=my_rec['in'])
@@ -15,41 +27,81 @@ class APITestCase_myAssert(APITestCase):
         return response.data.get('id', 0)
 
     def list(self, my_list, doAssert):
+        """
+        call and assert list
+        :param my_list:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'list get'
         self.end_point = self.api_end_point
         response = self.client.get(self.end_point)
         if doAssert:
             self.myAssert(response, my_list)
 
-    def retrieve(self, my_rec, id, doAssert):
+    def retrieve(self, my_rec, pk, doAssert):
+        """
+        call and assert retrieve
+        :param my_rec:
+        :param pk:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'retrieve get'
-        self.end_point = self.api_end_point + str(id) + '/'
+        self.end_point = self.api_end_point + str(pk) + '/'
         response = self.client.get(self.end_point)
         if doAssert:
             self.myAssert(response, my_rec)
 
-    def destroy(self, my_rec, id, doAssert):
+    def destroy(self, my_rec, pk, doAssert):
+        """
+        call and assert destroy
+        :param my_rec:
+        :param pk:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'destroy delete'
-        self.end_point = self.api_end_point + str(id) + '/'
+        self.end_point = self.api_end_point + str(pk) + '/'
         response = self.client.delete(self.end_point)
         if doAssert:
             self.myAssert(response, my_rec)
 
-    def update(self, my_rec, id, doAssert):
+    def update(self, my_rec, pk, doAssert):
+        """
+        call and assert update
+        :param my_rec:
+        :param pk:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'update put'
-        self.end_point = self.api_end_point + str(id) + '/'
+        self.end_point = self.api_end_point + str(pk) + '/'
         response = self.client.put(self.end_point, data=my_rec['in'])
         if doAssert:
             self.myAssert(response, my_rec)
 
-    def partial_update(self, my_rec, id, doAssert):
+    def partial_update(self, my_rec, pk, doAssert):
+        """
+        call and assert partial_update
+        :param my_rec:
+        :param pk:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'partial_update patch'
-        self.end_point = self.api_end_point + str(id) + '/'
+        self.end_point = self.api_end_point + str(pk) + '/'
         response = self.client.patch(self.end_point, data=my_rec['in'])
         if doAssert:
             self.myAssert(response, my_rec)
 
     def options(self, my_rec, doAssert):
+        """
+        call and assert options
+        :param my_rec:
+        :param doAssert:
+        :return:
+        """
         self.operation = 'options options'
         self.end_point = self.api_end_point
         response = self.client.options(self.end_point)
@@ -57,6 +109,12 @@ class APITestCase_myAssert(APITestCase):
             self.myAssert(response, my_rec)
 
     def myAssert(self, response, my_rec):
+        """
+        assert json API and prepare to print dump for fails
+        :param response:
+        :param my_rec:
+        :return:
+        """
         self.dump_msg = \
             '\n' \
             '*** CALL: %s %s\n' \
@@ -79,6 +137,13 @@ class APITestCase_myAssert(APITestCase):
         self.myAssertJson(response, my_rec)
 
     def __myAssertBaseType(self, response, expected, path):
+        """
+        assert base types like str, int, float, None
+        :param response:
+        :param expected:
+        :param path:
+        :return:
+        """
         if response != expected:
             self.fail(
                 "Field value does not match. "
@@ -86,6 +151,13 @@ class APITestCase_myAssert(APITestCase):
                 % (path, response, expected, self.dump_msg))
 
     def __myAssertDict(self, response, expected, path):
+        """
+        assert the dict and its descendants
+        :param response:
+        :param expected:
+        :param path:
+        :return:
+        """
         for key_dict in expected:
             new_path = '%s.%s' % (path, key_dict)
             if key_dict in response:
@@ -96,6 +168,13 @@ class APITestCase_myAssert(APITestCase):
                           % (key_dict, path, self.dump_msg))
 
     def __myAssertList(self, response, expected, path):
+        """
+        assert the list and its descendants
+        :param response:
+        :param expected:
+        :param path:
+        :return:
+        """
         if len(response) != len(expected):
             self.fail(
                 "List length does not match. "
@@ -103,25 +182,42 @@ class APITestCase_myAssert(APITestCase):
                 % (path, len(response), len(expected), self.dump_msg))
         for i, item_expected in enumerate(expected):
             new_path = '%s[%s]' % (path, i)
-            self.__myAssertEqual(response[i], expected[i], new_path)
+            self.__myAssertEqual(response[i], item_expected, new_path)
 
     def __myAssertEqual(self, response, expected, path):
-        # if isinstance(response, expected.__class__.__name__):
-        if type(response) != type(expected) and \
-           not (isinstance(expected, dict) and isinstance(response, dict)) and\
-           not (isinstance(expected, list) and isinstance(response, list)) and\
-           not (isinstance(expected, str) and isinstance(response, str)):
-            self.fail(
-                "Type mismatch. path:'%s' response:'%s' expected:'%s' %s"
-                % (path, type(response), type(expected), self.dump_msg))
-
+        """
+        checks the type and calls a specific method
+        :param response:
+        :param expected:
+        :param path:
+        :return:
+        """
         if isinstance(expected, dict):
+            self.__check_type_mismatch(response, expected, path, dict)
             self.__myAssertDict(response, expected, path)
 
         elif isinstance(expected, list):
+            self.__check_type_mismatch(response, expected, path, list)
             self.__myAssertList(response, expected, path)
 
-        elif isinstance(expected, (str, bool, int, float, type(None))):
+        elif isinstance(expected, str):
+            self.__check_type_mismatch(response, expected, path, str)
+            self.__myAssertBaseType(response, expected, path)
+
+        elif isinstance(expected, bool):
+            self.__check_type_mismatch(response, expected, path, bool)
+            self.__myAssertBaseType(response, expected, path)
+
+        elif isinstance(expected, int):
+            self.__check_type_mismatch(response, expected, path, int)
+            self.__myAssertBaseType(response, expected, path)
+
+        elif isinstance(expected, float):
+            self.__check_type_mismatch(response, expected, path, float)
+            self.__myAssertBaseType(response, expected, path)
+
+        elif isinstance(expected, type(None)):
+            self.__check_type_mismatch(response, expected, path, type(None))
             self.__myAssertBaseType(response, expected, path)
 
         else:
@@ -129,7 +225,28 @@ class APITestCase_myAssert(APITestCase):
                       "path:'%s' response:'%s' expected:'%s' %s"
                       % (path, type(response), type(expected), self.dump_msg))
 
+    def __check_type_mismatch(self, response, expected, path, item_type):
+        """
+        check the type
+        :param response:
+        :param expected:
+        :param path:
+        :param item_type:
+        :return:
+        """
+        if not isinstance(response, item_type):
+            self.fail(
+                "Type mismatch. path:'%s' response:'%s' expected:'%s' %s"
+                % (path, type(response), type(expected), self.dump_msg))
+
     def myAssertJson(self, response, expected, path='json'):
+        """
+        assert json API
+        :param response:
+        :param expected:
+        :param path:
+        :return:
+        """
         if 'status_code' in expected:
             if response.status_code != expected['status_code']:
                 self.fail(

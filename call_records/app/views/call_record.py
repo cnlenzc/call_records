@@ -1,3 +1,6 @@
+"""
+Call view definition
+"""
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import viewsets, permissions, pagination, response
 from app.models import CallRecord
@@ -5,6 +8,9 @@ from app.serializers import CallRecordSerializer
 
 
 class CallRecordFilter(FilterSet):
+    """
+    Call Filter definition
+    """
 
     class Meta:
         model = CallRecord
@@ -12,6 +18,9 @@ class CallRecordFilter(FilterSet):
 
 
 class CallRecordPagination(pagination.PageNumberPagination):
+    """
+    Call Pagination definition
+    """
 
     page_size = 25
 

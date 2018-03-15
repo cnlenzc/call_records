@@ -1,8 +1,14 @@
+"""
+Call charge model definition
+"""
 from django.db import models
 from util import MyTypes
 
 
 class CallCharge(models.Model):
+    """
+    Call charge model definition
+    """
     price00h = MyTypes.PositiveMoneyField12(
         help_text="Call charge per minute between 00h and 00h59")
 

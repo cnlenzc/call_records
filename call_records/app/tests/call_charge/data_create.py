@@ -1,7 +1,13 @@
+"""
+data to test create
+"""
 from rest_framework import status
 
 
 class Records_create():
+    """
+    class to define the records to test and assert
+    """
 
     ok1 = {
         "in":

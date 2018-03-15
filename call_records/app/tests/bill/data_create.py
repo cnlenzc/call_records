@@ -1,8 +1,14 @@
+"""
+data to test create
+"""
 from rest_framework import status
 from util import get_last_month
 
 
 class Records_create():
+    """
+    class to define the records to test and assert
+    """
 
     ok_no_calls = \
         {

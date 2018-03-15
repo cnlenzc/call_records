@@ -1,3 +1,6 @@
+"""
+Call model definition
+"""
 from django.db import models
 from util import MyTypes
 
@@ -8,6 +11,9 @@ choices_type = ((START, 'start'), (END, 'end'))
 
 
 class CallRecord(models.Model):
+    """
+    Call model definition
+    """
     type = models.CharField(
         help_text="Indicate if it's a call 'start' or 'end' record",
         max_length=1,

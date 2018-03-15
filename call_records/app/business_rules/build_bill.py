@@ -1,3 +1,6 @@
+"""
+Create a Bill and its bill lines from call records
+"""
 from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
 from app.models import \
@@ -5,33 +8,25 @@ from app.models import \
 
 
 class BuildTheBill():
+    """
+    Create a Bill and its bill lines from call records
+    """
 
     def __init__(self, bill):
         self._bill = bill
 
     def build(self):
-        self._standing_charge = self._read_standing_charge()
-        self._call_charge = self._read_call_charge()
+        """ build the bill """
+        self._standing_charge = read_standing_charge()
+        self._call_charge = read_call_charge()
         self._timestamp_calculation()
         calls_of_period = self._read_calls_of_period()
 
         for call_start in calls_of_period:
             self._create_bill_line(call_start)
 
-    def _read_standing_charge(self):
-        list = StandingCharge.objects.filter()[:1]
-        if len(list) != 1:
-            raise ValidationError(
-                'The Standing Charge setting does not exist.')
-        return list[0].price
-
-    def _read_call_charge(self):
-        list = CallCharge.objects.filter()[:1]
-        if len(list) != 1:
-            raise ValidationError('The Call Charge setting does not exist.')
-        return list[0]
-
     def _timestamp_calculation(self):
+        """ calculate the timestamp for the start and end """
         year, month = self._bill.period.split('-')[:2]
         # first day of the period
         period_start = datetime(int(year), int(month), 1, 0, 0)
@@ -48,6 +43,7 @@ class BuildTheBill():
         self.timestamp_end = int(period_end.timestamp())
 
     def _read_calls_of_period(self):
+        """ read all call of bill period """
         calls = CallRecord.objects\
             .filter(
                 source=self._bill.source,
@@ -60,6 +56,7 @@ class BuildTheBill():
         return calls
 
     def _create_bill_line(self, call_start):
+        """ create a line of bill """
         call_end = CallRecord.objects \
             .filter(call_id=call_start['call_id'], type=END) \
             .values('timestamp')
@@ -88,6 +85,7 @@ class BuildTheBill():
             price=price)
 
     def _price_calculation(self, timestamp_start, timestamp_end):
+        """ price calculation of a call """
         start = datetime.fromtimestamp(timestamp_start)
         end = datetime.fromtimestamp(timestamp_end)
         price = self._standing_charge
@@ -104,3 +102,20 @@ class BuildTheBill():
             price += price_per_minute * minutes_within_the_hour
             time_inter = time_next
         return price
+
+
+def read_standing_charge():
+    """ read the standing charge config """
+    res = StandingCharge.objects.filter()[:1]
+    if res.count() != 1:
+        raise ValidationError(
+            'The Standing Charge setting does not exist.')
+    return res[0].price
+
+
+def read_call_charge():
+    """ read the call charge config """
+    res = CallCharge.objects.filter()[:1]
+    if res.count() != 1:
+        raise ValidationError('The Call Charge setting does not exist.')
+    return res[0]

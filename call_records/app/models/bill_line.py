@@ -1,9 +1,15 @@
+"""
+Bill line model definition
+"""
 from django.db import models
 from util import MyTypes
 from app.models.bill import Bill
 
 
 class BillLine(models.Model):
+    """
+    Bill line model definition
+    """
 
     bill = models.ForeignKey(
         Bill,

@@ -1,3 +1,6 @@
+"""
+Call Charge view definition
+"""
 from rest_framework import viewsets, mixins, permissions, response
 from app.models import CallCharge
 from app.serializers import CallChargeSerializer
@@ -9,7 +12,7 @@ class CallChargeViewSet(mixins.CreateModelMixin,
     """
     This viewset provides the following actions:
     list: Returns the CallCharge.
-    create: Create (or update) a new CallCharge.
+    create: Create (or update) the CallCharge.
     """
     queryset = CallCharge.objects.all()
     serializer_class = CallChargeSerializer

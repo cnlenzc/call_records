@@ -1,3 +1,6 @@
+"""
+Bill view definition
+"""
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from django.db import transaction
 from rest_framework.response import Response
@@ -9,6 +12,9 @@ from util import get_last_month
 
 
 class BillFilter(FilterSet):
+    """
+    Bill Filter definition
+    """
 
     class Meta:
         model = Bill
@@ -16,6 +22,9 @@ class BillFilter(FilterSet):
 
 
 class BillPagination(pagination.PageNumberPagination):
+    """
+    Bill Pagination definition
+    """
 
     page_size = 25
 
@@ -34,7 +43,7 @@ class BillViewSet(mixins.CreateModelMixin,
     """
     This viewset provides the following actions:
     list: Returns the bill list.
-    create: Create a new bill.
+    create: Create a new bill or retrieve an existing bill.
     """
     queryset = Bill.objects.all()
     serializer_class = BillSerializer

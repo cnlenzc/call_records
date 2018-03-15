@@ -1,7 +1,13 @@
+"""
+data to test options
+"""
 from rest_framework import status
 
 
 class Records_options():
+    """
+    class to define the records to test and assert
+    """
 
     ok = {
         "out":
