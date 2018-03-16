@@ -55,14 +55,23 @@ class Records_create():
 
     not_unique = \
         {
-            "in": ok1["in"],
+            "in":
+            {
+                "type": "1",
+                "timestamp": timestamp2,
+                "call_id": 1,
+                "source": "1655678765",
+                "destination": "1676235678"
+            },
             "out":
             {
-                "non_field_errors": [
-                    "The fields call_id, type must make a unique set."
-                ]
+                "type": "1",
+                "timestamp": timestamp2,
+                "call_id": 1,
+                "source": "1655678765",
+                "destination": "1676235678"
             },
-            "status_code": status.HTTP_400_BAD_REQUEST
+            "status_code": status.HTTP_200_OK
         }
 
     all_blank = \

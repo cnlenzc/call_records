@@ -2,7 +2,7 @@
 Call view definition
 """
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework import viewsets, permissions, pagination, response
+from rest_framework import viewsets, permissions, pagination, response, exceptions
 from app.models import CallRecord
 from app.serializers import CallRecordSerializer
 
@@ -49,3 +49,32 @@ class CallRecordViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_class = CallRecordFilter
     pagination_class = CallRecordPagination
+
+    def create(self, request, *args, **kwargs):
+        '''
+        Override the create method.
+        if the object exists, then do not create, just update.
+        '''
+        try:
+            return super().create(request, *args, **kwargs)
+        except exceptions.ValidationError as error:
+            if error.get_codes() == {'non_field_errors': ['unique']}:
+                call_id = request.data.get('call_id', None)
+                type = request.data.get('type', None)
+                # trying to get the instance with the same unique pair
+                self.current_instance = self.get_queryset().get(call_id=call_id, type=type)
+                return super().update(request, *args, **kwargs)
+            else:
+                raise error
+
+    def get_object(self):
+        """
+        Returns the object
+        Override method to use in create method (update without pk)
+        """
+        if getattr(self, 'current_instance', None):
+            return self.current_instance
+        else:
+            return super().get_object()
+
+
