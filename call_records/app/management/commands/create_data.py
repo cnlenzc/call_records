@@ -4,40 +4,17 @@ Command to create data for settings and test
 from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db.models import Max
-from app.models import StandingCharge, CallCharge, CallRecord
+from app.models import ConfigPrice, CallRecord
 
 
-STANDING_CHARGE = {
-    "price": 0.36,
+CONFIG_PRICE = {
+    "start_time": 6,
+    "end_time": 22,
+    "price_per_call_standard": 0.36,
+    "price_per_call_reduced": 0.36,
+    "price_per_minute_standard": 0.09,
+    "price_per_minute_reduced": 0,
 }
-
-CALL_CHARGE = {
-    "price00h": 0,
-    "price01h": 0,
-    "price02h": 0,
-    "price03h": 0,
-    "price04h": 0,
-    "price05h": 0,
-    "price06h": 0.09,
-    "price07h": 0.09,
-    "price08h": 0.09,
-    "price09h": 0.09,
-    "price10h": 0.09,
-    "price11h": 0.09,
-    "price12h": 0.09,
-    "price13h": 0.09,
-    "price14h": 0.09,
-    "price15h": 0.09,
-    "price16h": 0.09,
-    "price17h": 0.09,
-    "price18h": 0.09,
-    "price19h": 0.09,
-    "price20h": 0.09,
-    "price21h": 0.09,
-    "price22h": 0,
-    "price23h": 0,
-}
-
 
 LIST_CALL_RECORD = [
     ['2018-01-29', '15:00:00', 60 * 60 + 00, '88888888888', '21980000008'],
@@ -65,8 +42,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        update_or_create(StandingCharge, STANDING_CHARGE)
-        update_or_create(CallCharge, CALL_CHARGE)
+        update_or_create(ConfigPrice, CONFIG_PRICE)
         create_call_list()
 
 

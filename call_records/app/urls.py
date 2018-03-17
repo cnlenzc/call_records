@@ -9,8 +9,7 @@ from app import views
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'call-record', views.CallRecordViewSet)
-router.register(r'standing-charge', views.StandingChargeViewSet)
-router.register(r'call-charge', views.CallChargeViewSet)
+router.register(r'config-price', views.ConfigPriceViewSet)
 router.register(r'bill', views.BillViewSet)
 router.register(r'bill-line', views.BillLineViewSet)
 

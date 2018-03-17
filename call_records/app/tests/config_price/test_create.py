@@ -26,6 +26,6 @@ class CreateAPI(APITestCase_myAssert):
         """ try to create  with invalid price """
         self.create(rec.invalid_price, doAssert=True)
 
-    def test_invalid_price2(self):
-        """ try to create  with invalid price """
-        self.create(rec.invalid_price2, doAssert=True)
+    def test_invalid_hour(self):
+        """ try to create  with invalid hour """
+        self.create(rec.invalid_hour, doAssert=True)

@@ -2,7 +2,7 @@
 Command to delete all data
 """
 from django.core.management.base import BaseCommand
-from app.models import StandingCharge, CallCharge, CallRecord, Bill
+from app.models import ConfigPrice, CallRecord, Bill
 
 
 class Command(BaseCommand):
@@ -13,8 +13,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        delete_all(StandingCharge)
-        delete_all(CallCharge)
+        delete_all(ConfigPrice)
         delete_all(CallRecord)
         delete_all(Bill)
 

@@ -15,9 +15,6 @@ class APITestCase_myAssert(APITestCase):
     def create(self, my_rec, doAssert):
         """
         Call and assert create
-        :param my_rec:
-        :param doAssert:
-        :return:
         """
         self.operation = 'create post'
         self.end_point = self.api_end_point
@@ -29,9 +26,6 @@ class APITestCase_myAssert(APITestCase):
     def list(self, my_list, doAssert):
         """
         call and assert list
-        :param my_list:
-        :param doAssert:
-        :return:
         """
         self.operation = 'list get'
         self.end_point = self.api_end_point
@@ -42,10 +36,6 @@ class APITestCase_myAssert(APITestCase):
     def retrieve(self, my_rec, pk, doAssert):
         """
         call and assert retrieve
-        :param my_rec:
-        :param pk:
-        :param doAssert:
-        :return:
         """
         self.operation = 'retrieve get'
         self.end_point = self.api_end_point + str(pk) + '/'
@@ -56,10 +46,6 @@ class APITestCase_myAssert(APITestCase):
     def destroy(self, my_rec, pk, doAssert):
         """
         call and assert destroy
-        :param my_rec:
-        :param pk:
-        :param doAssert:
-        :return:
         """
         self.operation = 'destroy delete'
         self.end_point = self.api_end_point + str(pk) + '/'
@@ -70,10 +56,6 @@ class APITestCase_myAssert(APITestCase):
     def update(self, my_rec, pk, doAssert):
         """
         call and assert update
-        :param my_rec:
-        :param pk:
-        :param doAssert:
-        :return:
         """
         self.operation = 'update put'
         self.end_point = self.api_end_point + str(pk) + '/'
@@ -84,10 +66,6 @@ class APITestCase_myAssert(APITestCase):
     def partial_update(self, my_rec, pk, doAssert):
         """
         call and assert partial_update
-        :param my_rec:
-        :param pk:
-        :param doAssert:
-        :return:
         """
         self.operation = 'partial_update patch'
         self.end_point = self.api_end_point + str(pk) + '/'
@@ -98,9 +76,6 @@ class APITestCase_myAssert(APITestCase):
     def options(self, my_rec, doAssert):
         """
         call and assert options
-        :param my_rec:
-        :param doAssert:
-        :return:
         """
         self.operation = 'options options'
         self.end_point = self.api_end_point
@@ -111,9 +86,6 @@ class APITestCase_myAssert(APITestCase):
     def myAssert(self, response, my_rec):
         """
         assert json API and prepare to print dump for fails
-        :param response:
-        :param my_rec:
-        :return:
         """
         self.dump_msg = \
             '\n' \
@@ -139,10 +111,6 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertBaseType(self, response, expected, path):
         """
         assert base types like str, int, float, None
-        :param response:
-        :param expected:
-        :param path:
-        :return:
         """
         if response != expected:
             self.fail(
@@ -153,10 +121,6 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertDict(self, response, expected, path):
         """
         assert the dict and its descendants
-        :param response:
-        :param expected:
-        :param path:
-        :return:
         """
         for key_dict in expected:
             new_path = '%s.%s' % (path, key_dict)
@@ -170,10 +134,6 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertList(self, response, expected, path):
         """
         assert the list and its descendants
-        :param response:
-        :param expected:
-        :param path:
-        :return:
         """
         if len(response) != len(expected):
             self.fail(
@@ -187,10 +147,6 @@ class APITestCase_myAssert(APITestCase):
     def __myAssertEqual(self, response, expected, path):
         """
         checks the type and calls a specific method
-        :param response:
-        :param expected:
-        :param path:
-        :return:
         """
         if isinstance(expected, dict):
             self.__check_type_mismatch(response, expected, path, dict)
@@ -228,11 +184,6 @@ class APITestCase_myAssert(APITestCase):
     def __check_type_mismatch(self, response, expected, path, item_type):
         """
         check the type
-        :param response:
-        :param expected:
-        :param path:
-        :param item_type:
-        :return:
         """
         if not isinstance(response, item_type):
             self.fail(
@@ -242,10 +193,6 @@ class APITestCase_myAssert(APITestCase):
     def myAssertJson(self, response, expected, path='json'):
         """
         assert json API
-        :param response:
-        :param expected:
-        :param path:
-        :return:
         """
         if 'status_code' in expected:
             if response.status_code != expected['status_code']:

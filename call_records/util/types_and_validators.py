@@ -2,7 +2,7 @@ from functools import partial
 import datetime
 from django.db import models
 from django.core.validators import \
-    MinValueValidator, MinLengthValidator, RegexValidator
+    MinValueValidator, MaxValueValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from .funcs import get_last_month
 
@@ -49,3 +49,8 @@ class MyTypes:
         max_digits=12,
         decimal_places=2,
         validators=[MinValueValidator(0.0)])
+
+    Hour = partial(
+        models.SmallIntegerField,
+        validators=[MinValueValidator(0), MaxValueValidator(23)])
+

@@ -14,11 +14,7 @@ class IndexViewSet(viewsets.ViewSet):
         resp = {
             "title": "Welcome to the system of call records!",
             "docs": request.build_absolute_uri('docs'),
-            "config ": {
-                "standing-charge":
-                    request.build_absolute_uri('standing-charge'),
-                "call-charge": request.build_absolute_uri('call-charge'),
-            },
+            "config-price ": request.build_absolute_uri('config-price'),
             "handles": {
                 "call-record": request.build_absolute_uri('call-record'),
                 "bill": request.build_absolute_uri('bill'),
