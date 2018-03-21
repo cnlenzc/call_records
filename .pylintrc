@@ -11,6 +11,7 @@
 # --disable=W"
 disable=
     attribute-defined-outside-init,
+    too-many-instance-attributes,
     no-self-use,
     unused-argument,
     duplicate-code,

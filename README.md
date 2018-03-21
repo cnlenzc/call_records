@@ -50,7 +50,7 @@ Example of call_records/.env file for dev:
 DEBUG=True
 WEB_CONCURRENCY=2
 DATABASE_URL='postgresql://u_call_records:pwd123@localhost:5432/db_call_records'
-SECRET_KEY=")z*j%sx=d3zq9h_m-ovw-hq!p2()yzg!ydft_+smpw=#n(l0h*"
+SECRET_KEY="**************************************************"
 ```
 
 Create the database objects
@@ -67,44 +67,34 @@ $ python manage.py test
 Result
 ```
 Loading .env File
+DEBUG=True
 Creating test database for alias 'default'...
 System check identified no issues (0 silenced).
-.............
+............................................
 ----------------------------------------------------------------------
-Ran 13 tests in 0.159s
+Ran 44 tests in 0.789s
 
 OK
 Destroying test database for alias 'default'...
+
+Process finished with exit code 0
 ```
 
 ## Running on local web server
 ```
 $ python manage.py runserver
-  para usar o server: WSGIServer/0.2 CPython/3.6.4
-    ou 
+  server: WSGIServer/0.2 CPython/3.6.4
+    or
 $ heroku local
-  para usar o server: gunicorn/19.7.1
+  server: gunicorn/19.7.1
 ```
-Abra o browser com url
-http://localhost:8000/call/ (WSGIServer)
+Open in browser
+http://localhost:8000/ (WSGIServer)
  ou
-http://localhost:5000/call/ (gunicorn)
+http://localhost:5000/ (gunicorn)
 
 
-## Using the API
-You can use the API by internet with these URL
-
-###### API Documentation
-https://call-records-lenz.herokuapp.com/docs
-
-###### Welcome page
-https://call-records-lenz.herokuapp.com
-
-###### Calls list
-https://call-records-lenz.herokuapp.com/call/
-
-
-### Coding style tests
+## Coding style tests
 
 Using flake8 to check the coding style
 ```
@@ -139,18 +129,100 @@ $ git push heroku master
            Released v6
            https://call-records-lenz.herokuapp.com/ deployed to Heroku
     Verifying deploy... done.
-$ heroku run python call_records/manage.py migrate
-$ heroku config:set DEBUG=False
-$ heroku config:set SECRET_KEY='@z_0$oog0f$*mtm7=mbh_8gff-&n4zt+l@89x%+&xhk)_wz$14'
+$ heroku run python call_records/manage.py migrate --app call-records-lenz
+$ heroku config:set DEBUG=False --app call-records-lenz
+$ heroku config:set SECRET_KEY='**************************************************' --app call-records-lenz
+$ heroku run python call_records/manage.py create_data --app call-records-lenz
+```
+
+## Using the API
+You can use the API by internet with these URL
+
+###### Welcome/index page
+https://call-records-lenz.herokuapp.com
+
+###### API Documentation
+https://call-records-lenz.herokuapp.com/docs
+
+###### Charge price setting
+https://call-records-lenz.herokuapp.com/config-price
+
+###### Calls handle
+https://call-records-lenz.herokuapp.com/call-record
+
+###### Create/retrieve the bill
+https://call-records-lenz.herokuapp.com/bill
+
+## Use case
+
+Example charge price setting
+```
+{
+    "start_time": 6,
+    "end_time": 22,
+    "price_per_call_standard": "0.36",
+    "price_per_call_reduced": "0.36",
+    "price_per_minute_standard": "0.09",
+    "price_per_minute_reduced": "0.00"
+}
+```
+
+Example call-record list with filter call_id=9
+```
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 63,
+            "type": "1",
+            "timestamp": 1518299833,
+            "call_id": 9,
+            "source": "1632203625",
+            "destination": "21980000007"
+        },
+        {
+            "id": 64,
+            "type": "2",
+            "timestamp": 1518300656,
+            "call_id": 9,
+            "source": null,
+            "destination": null
+        }
+    ]
+}
+```
+
+Example bill of phone number 1632203625 and period 2018-02
+```
+{
+    "id": 6,
+    "source": "1632203625",
+    "period": "2018-02",
+    "calls": [
+        {
+            "destination": "21980000007",
+            "start_date_time": "2018-02-10T21:57:13",
+            "duration": "00:13:43",
+            "price": "0.54"
+        }
+    ]
+}
 ```
 
 ## Built With
 
-* [Python](https://www.python.org) - The programming language used
-* [Django](https://www.djangoproject.com) - The web framework used
-* [Django Rest Framework](http://www.django-rest-framework.org) - The API REST framework used
-* [Postgres.app](http://postgresapp.com/documentation/) - The SQL DataBase used
+* [Python 3.6.4](https://www.python.org) - The programming language used
+* [Django 2.0.2](https://www.djangoproject.com) - The web framework used
+* [Django Rest Framework 3.7.7](http://www.django-rest-framework.org) - The API REST framework used
+* [Postgres 2.1.2 PostgreSQL 10](http://postgresapp.com/documentation/) - The SQL DataBase used
 * [Heroku](https://devcenter.heroku.com/categories/python) - Used to deploy and cloud
+
+Development environment
+
+* MacBook with MacOS 10.13.3
+* PyCharm 2017.3.4 (Community Edition)
 
 ## Authors
 

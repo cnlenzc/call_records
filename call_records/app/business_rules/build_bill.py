@@ -102,8 +102,10 @@ class BuildTheBill():
         # for each hour in the call time
         while time_inter < time_end:
             time_next = time_inter + timedelta(hours=1)
-            first_minute = time_inter if time_inter > time_start else time_start
-            last_minute = time_next if time_next < time_end else time_end
+            first_minute = \
+                time_inter if time_inter > time_start else time_start
+            last_minute = \
+                time_next if time_next < time_end else time_end
             minutes_within_the_hour = \
                 (last_minute - first_minute).seconds // 60
 

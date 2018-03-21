@@ -13,11 +13,9 @@ class IndexViewSet(viewsets.ViewSet):
         """ list application links """
         resp = {
             "title": "Welcome to the system of call records!",
-            "docs": request.build_absolute_uri('docs'),
-            "config-price ": request.build_absolute_uri('config-price'),
-            "handles": {
-                "call-record": request.build_absolute_uri('call-record'),
-                "bill": request.build_absolute_uri('bill'),
-            },
+            "API Documentation": request.build_absolute_uri('docs'),
+            "Charge price setting": request.build_absolute_uri('config-price'),
+            "Calls handle": request.build_absolute_uri('call-record'),
+            "Create/retrieve the bill": request.build_absolute_uri('bill'),
         }
         return response.Response(resp)

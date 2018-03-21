@@ -53,4 +53,3 @@ class MyTypes:
     Hour = partial(
         models.SmallIntegerField,
         validators=[MinValueValidator(0), MaxValueValidator(23)])
-
