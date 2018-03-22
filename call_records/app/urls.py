@@ -11,7 +11,6 @@ router = DefaultRouter()
 router.register(r'call-record', views.CallRecordViewSet)
 router.register(r'config-price', views.ConfigPriceViewSet)
 router.register(r'bill', views.BillViewSet)
-router.register(r'bill-line', views.BillLineViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
