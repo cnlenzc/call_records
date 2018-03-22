@@ -2,6 +2,7 @@
 automatic test for this operation
 """
 from django.core.management import call_command
+from app.models import ConfigPrice
 from app.tests.my_assert import APITestCase_myAssert
 from .data_create import Records_create as rec
 from . import API_END_POINT
@@ -38,6 +39,17 @@ class CreateAPI(APITestCase_myAssert):
     def test_create_ok_5_calls(self):
         """ test case to create bill with 5 calls """
         self.create(rec.ok_5_calls, doAssert=True)
+
+    def test_create_ok_alter_prices(self):
+        """ test case to create bill with 1 call with new prices """
+        ConfigPrice.objects.all().update(**rec.ok_alter_prices["config_price"])
+        self.create(rec.ok_alter_prices, doAssert=True)
+
+    def test_create_ok_alter_prices_after_processing(self):
+        """ test case to create bill with 1 call with new prices """
+        self.create(rec.ok_5_calls, doAssert=True)
+        ConfigPrice.objects.all().update(**rec.ok_alter_prices["config_price"])
+        self.create(rec.ok_alter_prices_after_processing, doAssert=True)
 
     def test_create_ok_near_60seg(self):
         """ test case to create bill with 59seg, 60seg and 61seg """

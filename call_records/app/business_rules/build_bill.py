@@ -98,26 +98,42 @@ class BuildTheBill():
             price = self._price_per_call_reduced
 
         time_inter = datetime(time_start.year, time_start.month,
-                              time_start.day, time_start.hour, 0)
-        # for each hour in the call time
+                              time_start.day, 0, 0)
+        # for each period (standard or reduced) in the call time
         while time_inter < time_end:
-            time_next = time_inter + timedelta(hours=1)
-            first_minute = \
-                time_inter if time_inter > time_start else time_start
-            last_minute = \
-                time_next if time_next < time_end else time_end
-            minutes_within_the_hour = \
-                (last_minute - first_minute).seconds // 60
 
-            # price_per_minute calculation within the hour
-            if time_inter.hour >= self._start_time and \
-               time_inter.hour < self._end_time:
-                price_per_minute = self._price_per_minute_standard
+            # find the period (between time_inter and time_next)
+            if time_inter.hour < self._start_time:
+                delta = timedelta(hours=self._start_time)
+                reduced_price = True
+            elif time_inter.hour < self._end_time:
+                delta = timedelta(hours=self._end_time-self._start_time)
+                reduced_price = False
             else:
-                price_per_minute = self._price_per_minute_reduced
+                delta = timedelta(hours=24-self._end_time+self._start_time)
+                reduced_price = True
+            time_next = time_inter + delta
 
-            price += price_per_minute * minutes_within_the_hour
+            first_minute_in_period = \
+                time_inter if time_inter >= time_start else time_start
+            last_minute_in_period = \
+                time_next if time_next < time_end else time_end
+            if first_minute_in_period < last_minute_in_period:
+                minutes_within_the_period = \
+                    (last_minute_in_period -
+                     first_minute_in_period).seconds // 60
+            else:
+                minutes_within_the_period = 0
+
+            # price_per_minute calculation within the period
+            if reduced_price:
+                price_per_minute = self._price_per_minute_reduced
+            else:
+                price_per_minute = self._price_per_minute_standard
+            price += price_per_minute * minutes_within_the_period
+
             time_inter = time_next
+
         return price
 
     def _read_config_price(self):

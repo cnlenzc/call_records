@@ -115,7 +115,7 @@ class Records_create():
                         "destination": "21980000002",
                         "start_date_time": "2018-02-04T18:40:15",
                         "duration": "00:32:20",
-                        "price": "3.15"
+                        "price": "3.24"
                     },
                     {
                         "destination": "21980000003",
@@ -138,6 +138,67 @@ class Records_create():
                 ]
             },
             "status_code": status.HTTP_201_CREATED
+        }
+
+    ok_alter_prices = \
+        {
+            "in":
+            {
+                "source": "88888888888",
+                "period": "2018-02",
+            },
+            "config_price":
+            {
+                "price_per_call_standard": 0.40,
+                "price_per_call_reduced": 0.38,
+                "price_per_minute_standard": 0.15,
+                "price_per_minute_reduced": 0.06,
+            },
+            "out":
+            {
+                "source": "88888888888",
+                "period": "2018-02",
+                "calls": [
+                    {
+                        "destination": "21980000001",
+                        "start_date_time": "2018-01-31T23:59:15",
+                        "duration": "00:05:10",
+                        "price": "0.68"
+                    },
+                    {
+                        "destination": "21980000002",
+                        "start_date_time": "2018-02-04T18:40:15",
+                        "duration": "00:32:20",
+                        "price": "5.20"
+                    },
+                    {
+                        "destination": "21980000003",
+                        "start_date_time": "2018-02-05T06:40:15",
+                        "duration": "00:02:30",
+                        "price": "0.70"
+                    },
+                    {
+                        "destination": "21980000004",
+                        "start_date_time": "2018-02-06T21:50:25",
+                        "duration": "00:22:40",
+                        "price": "2.53"
+                    },
+                    {
+                        "destination": "21980000005",
+                        "start_date_time": "2018-02-07T08:00:00",
+                        "duration": "00:01:00",
+                        "price": "0.55"
+                    },
+                ]
+            },
+            "status_code": status.HTTP_201_CREATED
+        }
+
+    ok_alter_prices_after_processing = \
+        {
+            "in": ok_5_calls["in"],
+            "out": ok_5_calls["out"],
+            "status_code": status.HTTP_200_OK
         }
 
     ok_near_60seg = \

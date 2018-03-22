@@ -52,10 +52,11 @@ class BillViewSet(mixins.CreateModelMixin,
     pagination_class = BillPagination
 
     def create(self, request, *args, **kwargs):
-        '''
-        Override the create method.
-        if the object exists, then do not create, just update.
-        '''
+        """
+        Create a new bill or retrieve an existing bill.
+        """
+        # Override the create method.
+        # if the bill exists, then do not create, just retrieve.
         try:
             return super().create(request, *args, **kwargs)
         except exceptions.ValidationError as error:
